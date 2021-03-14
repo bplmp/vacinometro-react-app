@@ -1,0 +1,24 @@
+.line-avg {
+  fill: none;
+  stroke: #000;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.doses-bar {
+  // fill: #bbb;
+  fill: #87bac9;
+  stroke: #fff;
+}
+
+.tooltip {
+  position: absolute;
+  display: none;
+  min-width: 80px;
+  height: auto;
+  background: none repeat scroll 0 0 #ffffff;
+  border: 1px solid #bbbbbb;
+  padding: 14px;
+  text-align: center;
+}

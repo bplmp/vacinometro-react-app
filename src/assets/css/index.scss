@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Bitter:wght@100;400;700&display=swap');
+@import "tachyons";
+@import "variables.scss";
+
+body {
+  margin: $navbar-height 0 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: $font-stack;
+  color: $primary-color;
+  background-color: $body-background-color;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  width: $grid-max-width;
+  max-width: 84%;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
