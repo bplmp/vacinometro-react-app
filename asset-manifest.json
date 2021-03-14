@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/vacinometro-react-app/static/css/main.e63007d4.chunk.css",
-    "main.js": "/vacinometro-react-app/static/js/main.fb363cdf.chunk.js",
-    "main.js.map": "/vacinometro-react-app/static/js/main.fb363cdf.chunk.js.map",
-    "runtime-main.js": "/vacinometro-react-app/static/js/runtime-main.66335a37.js",
-    "runtime-main.js.map": "/vacinometro-react-app/static/js/runtime-main.66335a37.js.map",
-    "static/js/2.29b344e0.chunk.js": "/vacinometro-react-app/static/js/2.29b344e0.chunk.js",
-    "static/js/2.29b344e0.chunk.js.map": "/vacinometro-react-app/static/js/2.29b344e0.chunk.js.map",
-    "static/js/3.6f35e690.chunk.js": "/vacinometro-react-app/static/js/3.6f35e690.chunk.js",
-    "static/js/3.6f35e690.chunk.js.map": "/vacinometro-react-app/static/js/3.6f35e690.chunk.js.map",
-    "index.html": "/vacinometro-react-app/index.html",
-    "static/css/main.e63007d4.chunk.css.map": "/vacinometro-react-app/static/css/main.e63007d4.chunk.css.map",
-    "static/js/2.29b344e0.chunk.js.LICENSE.txt": "/vacinometro-react-app/static/js/2.29b344e0.chunk.js.LICENSE.txt"
+    "main.css": "/static/css/main.e63007d4.chunk.css",
+    "main.js": "/static/js/main.957da6e1.chunk.js",
+    "main.js.map": "/static/js/main.957da6e1.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.53768824.js",
+    "runtime-main.js.map": "/static/js/runtime-main.53768824.js.map",
+    "static/js/2.29b344e0.chunk.js": "/static/js/2.29b344e0.chunk.js",
+    "static/js/2.29b344e0.chunk.js.map": "/static/js/2.29b344e0.chunk.js.map",
+    "static/js/3.6f35e690.chunk.js": "/static/js/3.6f35e690.chunk.js",
+    "static/js/3.6f35e690.chunk.js.map": "/static/js/3.6f35e690.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.e63007d4.chunk.css.map": "/static/css/main.e63007d4.chunk.css.map",
+    "static/js/2.29b344e0.chunk.js.LICENSE.txt": "/static/js/2.29b344e0.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.66335a37.js",
+    "static/js/runtime-main.53768824.js",
     "static/js/2.29b344e0.chunk.js",
     "static/css/main.e63007d4.chunk.css",
-    "static/js/main.fb363cdf.chunk.js"
+    "static/js/main.957da6e1.chunk.js"
   ]
 }
