@@ -198,7 +198,7 @@ const ChartPctVaccinated = ({rawData, stateCode}) => {
           .attr("font-size", annotationFontSize)
           .attr("class", "annotations")
           .style("text-anchor", "beginning")
-          .text("% da população adulta vacinada");
+          .text("% da pop. adulta vacinada");
 
   }, [data, chartId, windowDimensions.width]);
 

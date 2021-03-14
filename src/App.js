@@ -54,7 +54,7 @@ function App() {
   return (
     <div className="grid">
       <section>
-        <p className="f6 i mt4 tc">Atualizado em {new Date(updatedAt.updated_at + " 00:00:00 GMT-0300").toLocaleString("pt-PT", {year: "numeric", month: "2-digit", day: "2-digit"})}</p>
+        <p className="f6 i mt4 tc">Dados atualizados em {new Date(updatedAt.updated_at + " 00:00:00 GMT-0300").toLocaleString("pt-PT", {year: "numeric", month: "2-digit", day: "2-digit"})}</p>
         <h1 className="tc f2-ns f3 lh-copy b mb3">Quanto tempo até a população brasileira ser vacinada contra o Covid-19?</h1>
         <p className="tc f3-ns f4 lh-copy normal mt0">No ritmo atual, demoraria até <span className="b">{date}</span> para que <span className="b">{MAIN_MILESTONE * 100}%</span> da população adulta do Brasil recebesse <span className="b">pelo menos 1 dose</span> da vacina.</p>
         <ChartPctVaccinated rawData={projections} stateCode="WRL"/>
@@ -63,13 +63,13 @@ function App() {
         <h2 className="tc f2-ns f3 lh-copy b">Quantas primeiras doses estão sendo aplicadas por dia no Brasil?</h2>
         <p className="tc f3-ns f4 lh-copy normal mt0">O Brasil aplicou <span className="b">{brLatest.new_first_shot_7d_avg.toLocaleString("pt-BR")} primeiras doses por dia</span>, considerando a média móvel dos últimos 7 dias.</p>
         <ChartDosesGiven rawData={projections} stateCode="WRL"/>
-        <figcaption className="f6 i">A linha representa a média movel de 7 dias.</figcaption>
+        <figcaption className="f6 i mt2">A linha representa a média movel de 7 dias.</figcaption>
       </section>
-      <section className="mt5 bt">
+      <section className="mt4 bt">
         <h2 className="tc f2-ns f3 lh-copy b mb0">Como está o ritmo da vacinação em cada estado?</h2>
         <h3 className="tc f4-ns f5 lh-copy normal mb0 mt4">Primeiras doses aplicadas em média por dia</h3>
         <ChartDosesGivenByState rawData={latest}/>
-        <figcaption className="f6 i">Dado representa a média movel de 7 dias.</figcaption>
+        <figcaption className="f6 i mt2">Dado representa a média movel de 7 dias.</figcaption>
       </section>
       {/*<section className="mt5 bt">
         <h2 className="tc f2-ns f3 lh-copy b mb0">Veja os gráficos para cada estado</h2>
@@ -88,7 +88,7 @@ function App() {
         ))}
       </section>
       */}
-      <section className="mt5 bt">
+      <section className="mt4 bt">
         <h2 className="tc f2-ns f3 lh-copy b mb0">Dados e metodologia</h2>
         <p className="lh-copy">Os dados de vacinação são do <a href={DATA_SOURCE.url} target="_blank" rel="noreferrer">{DATA_SOURCE.text}</a>. Dados de população são estimativas do IBGE, 2020.</p>
         <p className="lh-copy">Consideramos população adulta (elegível para receber a vacina) como os maiores de 18 anos.</p>

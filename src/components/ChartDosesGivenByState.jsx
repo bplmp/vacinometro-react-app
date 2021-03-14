@@ -32,7 +32,7 @@ const ChartDosesGivenByState = ({rawData}) => {
 
     var margin = {top: 20, right: 20, bottom: 30, left: 50},
     originalWidth = 600,
-    originalHeight = 600,
+    originalHeight = windowDimensions.width > 480 ? 700 : 900,
     width = originalWidth - margin.left - margin.right,
     height = originalHeight - margin.top - margin.bottom;
 
@@ -61,7 +61,7 @@ const ChartDosesGivenByState = ({rawData}) => {
             .range([0, width]);
 
   // Scale the range of the data in the domains
-  x.domain([0, d3.max(data, function(d){ return d.new_first_shot_7d_avg; })])
+  x.domain([0, d3.max(data, function(d){ return d.new_first_shot_7d_avg * 1.15; })])
   y.domain(data.map(function(d) { return d.code; }));
 
   // append the rectangles for the bar chart
@@ -82,6 +82,26 @@ const ChartDosesGivenByState = ({rawData}) => {
             .html(`${d.code}: ${(Math.round(d.new_first_shot_7d_avg * 10) / 10).toLocaleString("pt-BR")} mil<br/>primeiras doses em média por dia`);
       })
       .on("mouseout", function(d){ tooltip.style("display", "none");});
+
+  const maxShots = d3.max(data, function(d){ return d.new_first_shot_7d_avg; })
+  svg.selectAll(".bar-annotations")
+      .data(data)
+    .enter().append("text")
+      .attr("class", "annotations")
+      .attr("font-size", axisFontSize)
+      .attr("x", function(d) { return x(d.new_first_shot_7d_avg); })
+      .attr("y", function(d) { return y(d.code); })
+      .attr("dy", y.bandwidth() / 2)
+      .attr("dx", "0.25em")
+      .style("text-anchor", "beginning")
+      .style("alignment-baseline", "middle")
+      .text(function(d) {
+        if (d.new_first_shot_7d_avg === maxShots) {
+          return (d.new_first_shot_7d_avg / 1000).toLocaleString("pt-BR", { maximumFractionDigits: 1 }) + " mil";
+        } else {
+          return (d.new_first_shot_7d_avg / 1000).toLocaleString("pt-BR", { maximumFractionDigits: 1 });
+        }
+      })
 
   // Add the X Axis
   svg.append("g")

@@ -164,15 +164,17 @@ const ChartDosesGiven = ({rawData, stateCode}) => {
         )
         // .select(".domain").remove();
 
-      // text label for the y axis
-      svg.append("text")
-          .attr("y", 5)
-          .attr("x", 10)
-          // .attr("dy", "1em")
-          .attr("font-size", annotationFontSize)
-          .attr("class", "annotations")
-          .style("text-anchor", "beginning")
-          .text("mil primeiras doses aplicadas");
+      // // text label for the y axis
+      // if (windowDimensions.width > 480) {
+      //   svg.append("text")
+      //       .attr("y", 5)
+      //       .attr("x", 10)
+      //       // .attr("dy", "1em")
+      //       .attr("font-size", annotationFontSize)
+      //       .attr("class", "annotations")
+      //       .style("text-anchor", "beginning")
+      //       .text("mil primeiras doses aplicadas");
+      // }
 
       // Add the X Axis
       svg.append("g")
