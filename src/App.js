@@ -48,13 +48,13 @@ function App() {
   const br = projections['WRL']
   const brProj = br.filter(row => row.projected === true)
   const brMainMilestone = brProj.filter(row => row.milestone === MAIN_MILESTONE)[0]
-  const date = new Date(brMainMilestone.date + " 00:00:00 GMT-0300").toLocaleString("pt-PT", {year: "numeric", month: "2-digit", day: "2-digit"})
+  const date = new Date(brMainMilestone.date + " 00:00:00").toLocaleString("pt-PT", {year: "numeric", month: "2-digit", day: "2-digit"})
   const brLatest = latest.filter(row => row.code === "WRL")[0]
 
   return (
     <div className="grid">
       <section>
-        <p className="f6 i mt4 tc">Dados atualizados em {new Date(updatedAt.updated_at + " 00:00:00 GMT-0300").toLocaleString("pt-PT", {year: "numeric", month: "2-digit", day: "2-digit"})}</p>
+        <p className="f6 i mt4 tc">Dados atualizados em {new Date(updatedAt.updated_at + " 00:00:00").toLocaleString("pt-PT", {year: "numeric", month: "2-digit", day: "2-digit"})}</p>
         <h1 className="tc f2-ns f3 lh-copy b mb3">Quanto tempo até a população brasileira ser vacinada contra o Covid-19?</h1>
         <p className="tc f3-ns f4 lh-copy normal mt0">No ritmo atual, demoraria até <span className="b">{date}</span> para que <span className="b">{MAIN_MILESTONE * 100}%</span> da população adulta do Brasil recebesse <span className="b">pelo menos 1 dose</span> da vacina.</p>
         <ChartPctVaccinated rawData={projections} stateCode="WRL"/>

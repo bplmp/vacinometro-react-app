@@ -49,7 +49,7 @@ const ChartDosesGivenByState = ({rawData}) => {
     // format the data
     data.forEach(function(d) {
         // d.date = parseTime(d.date);
-        d.date = new Date(d.date + " 00:00:00 GMT-0300");
+        d.date = new Date(d.date + " 00:00:00");
     });
 
   // set the ranges
