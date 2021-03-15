@@ -61,7 +61,7 @@ function App() {
       </section>
       <section>
         <h2 className="tc f2-ns f3 lh-copy b">Quantas primeiras doses estão sendo aplicadas por dia no Brasil?</h2>
-        <p className="tc f3-ns f4 lh-copy normal mt0">O Brasil aplicou <span className="b">{brLatest.new_first_shot_7d_avg.toLocaleString("pt-BR")} primeiras doses por dia</span>, considerando a média móvel dos últimos 7 dias.</p>
+        <p className="tc f3-ns f4 lh-copy normal mt0">O Brasil está aplicando <span className="b">{brLatest.new_first_shot_7d_avg.toLocaleString("pt-BR")} primeiras doses por dia</span>, considerando a média móvel dos últimos 7 dias.</p>
         <ChartDosesGiven rawData={projections} stateCode="WRL"/>
         <figcaption className="f6 i mt2">A linha representa a média movel de 7 dias.</figcaption>
       </section>
