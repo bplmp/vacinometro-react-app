@@ -78,7 +78,13 @@ const ChartDosesGiven = ({rawData, stateCode}) => {
       svg.selectAll(".bar")
             .data(data)
           .enter().append("rect")
-            .attr("class", "doses-bar")
+            .attr("class", function (d) {
+              if (d.outlier) {
+                return "doses-bar-outlier"
+              } else {
+                return "doses-bar"
+              }
+            })
             .attr("x", function(d) { return x(d.date) - barWidth; })
             .attr("width", barWidth)
             .attr("y", function(d) { return y(d.new_first_shot); })

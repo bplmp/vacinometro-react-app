@@ -12,6 +12,12 @@
   stroke: #fff;
 }
 
+.doses-bar-outlier {
+  // fill: #bbb;
+  fill: red;
+  stroke: #fff;
+}
+
 .tooltip {
   position: absolute;
   display: none;

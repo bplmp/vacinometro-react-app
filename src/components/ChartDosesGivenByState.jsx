@@ -69,7 +69,7 @@ const ChartDosesGivenByState = ({rawData}) => {
   svg.selectAll(".bar")
       .data(data)
     .enter().append("rect")
-      .attr("class", "days-bar")
+      .attr("class", "doses-bar")
       //.attr("x", function(d) { return x(d.sales); })
       .attr("width", function(d) {return x(d.new_first_shot_mov_avg); } )
       .attr("y", function(d) { return y(d.code); })
