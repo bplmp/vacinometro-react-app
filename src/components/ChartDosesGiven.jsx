@@ -65,7 +65,7 @@ const ChartDosesGiven = ({rawData, stateCode}) => {
           // d.date = parseTime(d.date);
           d.date = new Date(d.date + " 00:00:00");
           d.new_first_shot = Number(d.new_first_shot) / 1000;
-          d.new_first_shot_7d_avg = Number(d.new_first_shot_7d_avg) / 1000;
+          d.new_first_shot_mov_avg = Number(d.new_first_shot_mov_avg) / 1000;
           d.milestone = 100 * Number(d.milestone);
       });
 
@@ -96,8 +96,8 @@ const ChartDosesGiven = ({rawData, stateCode}) => {
       var valueline = d3.line()
           .curve(d3.curveStep)
           .x(function(d) { return x(d.date); })
-          .y(function(d) { return y(d.new_first_shot_7d_avg); });
-      const dataLine = data.filter(row => row.new_first_shot_7d_avg > 0)
+          .y(function(d) { return y(d.new_first_shot_mov_avg); });
+      const dataLine = data.filter(row => row.new_first_shot_mov_avg > 0)
       svg.append("path")
           .data([dataLine])
           .attr("class", "line-avg")
@@ -111,7 +111,7 @@ const ChartDosesGiven = ({rawData, stateCode}) => {
           .attr("x1", function(d) { return x(lastAvgPoint[0].date) })
           .attr("y1", "2.5em")
           .attr("x2", function(d) { return x(lastAvgPoint[0].date) })
-          .attr("y2", function(d) { return y(lastAvgPoint[0].new_first_shot_7d_avg) })
+          .attr("y2", function(d) { return y(lastAvgPoint[0].new_first_shot_mov_avg) })
 
       svg.selectAll("points")
         .data(lastAvgPoint)
@@ -121,7 +121,7 @@ const ChartDosesGiven = ({rawData, stateCode}) => {
         .attr("stroke", "black")
         .attr("stroke-width", "0")
         .attr("cx", function(d) { return x(d.date) })
-        .attr("cy", function(d) { return y(d.new_first_shot_7d_avg) })
+        .attr("cy", function(d) { return y(d.new_first_shot_mov_avg) })
         .attr("r", 5)
 
     svg.selectAll("points-annotation")
@@ -129,18 +129,18 @@ const ChartDosesGiven = ({rawData, stateCode}) => {
       .enter()
       .append("text")
       .attr("x", function(d) { return x(d.date) })
-      .attr("y", function(d) { return y(d.new_first_shot_7d_avg) * 0 })
+      .attr("y", function(d) { return y(d.new_first_shot_mov_avg) * 0 })
       .attr("dy", "0")
       .attr("class", "annotations")
       .attr("font-size", annotationFontSize)
       .attr("text-anchor", "end")
-      .text(function (d) { return (Math.round(d.new_first_shot_7d_avg * 10) / 10).toLocaleString("pt-BR") + " mil primeiras doses"})
+      .text(function (d) { return (Math.round(d.new_first_shot_mov_avg * 10) / 10).toLocaleString("pt-BR") + " mil primeiras doses"})
     svg.selectAll("points-annotation-avg")
       .data(lastAvgPoint)
       .enter()
       .append("text")
       .attr("x", function(d) { return x(d.date) })
-      .attr("y", function(d) { return y(d.new_first_shot_7d_avg) * 0 })
+      .attr("y", function(d) { return y(d.new_first_shot_mov_avg) * 0 })
       .attr("dy", "1.5em")
       .attr("class", "annotations")
       .attr("font-size", annotationFontSize)

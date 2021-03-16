@@ -12,7 +12,7 @@ function getWindowDimensions() {
 }
 
 const ChartDosesGivenByState = ({rawData}) => {
-  const data = cloneDeep(rawData.filter(row => row.code !== "WRL")).sort((a,b) => a.new_first_shot_7d_avg - b.new_first_shot_7d_avg)
+  const data = cloneDeep(rawData.filter(row => row.code !== "WRL")).sort((a,b) => a.new_first_shot_mov_avg - b.new_first_shot_mov_avg)
   const chartId = `doses-given-by-state`
 
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
@@ -61,7 +61,7 @@ const ChartDosesGivenByState = ({rawData}) => {
             .range([0, width]);
 
   // Scale the range of the data in the domains
-  x.domain([0, d3.max(data, function(d){ return d.new_first_shot_7d_avg * 1.15; })])
+  x.domain([0, d3.max(data, function(d){ return d.new_first_shot_mov_avg * 1.15; })])
   y.domain(data.map(function(d) { return d.code; }));
 
   // append the rectangles for the bar chart
@@ -71,7 +71,7 @@ const ChartDosesGivenByState = ({rawData}) => {
     .enter().append("rect")
       .attr("class", "days-bar")
       //.attr("x", function(d) { return x(d.sales); })
-      .attr("width", function(d) {return x(d.new_first_shot_7d_avg); } )
+      .attr("width", function(d) {return x(d.new_first_shot_mov_avg); } )
       .attr("y", function(d) { return y(d.code); })
       .attr("height", y.bandwidth() * 0.9)
       .on("mousemove", function(d){
@@ -79,27 +79,27 @@ const ChartDosesGivenByState = ({rawData}) => {
             .style("left", d3.event.pageX - 50 + "px")
             .style("top", d3.event.pageY - 70 + "px")
             .style("display", "inline-block")
-            .html(`${d.code}: ${(Math.round(d.new_first_shot_7d_avg * 10) / 10).toLocaleString("pt-BR")} mil<br/>primeiras doses em média por dia`);
+            .html(`${d.code}: ${(Math.round(d.new_first_shot_mov_avg * 10) / 10).toLocaleString("pt-BR")} mil<br/>primeiras doses em média por dia`);
       })
       .on("mouseout", function(d){ tooltip.style("display", "none");});
 
-  const maxShots = d3.max(data, function(d){ return d.new_first_shot_7d_avg; })
+  const maxShots = d3.max(data, function(d){ return d.new_first_shot_mov_avg; })
   svg.selectAll(".bar-annotations")
       .data(data)
     .enter().append("text")
       .attr("class", "annotations")
       .attr("font-size", axisFontSize)
-      .attr("x", function(d) { return x(d.new_first_shot_7d_avg); })
+      .attr("x", function(d) { return x(d.new_first_shot_mov_avg); })
       .attr("y", function(d) { return y(d.code); })
       .attr("dy", y.bandwidth() / 2)
       .attr("dx", "0.25em")
       .style("text-anchor", "beginning")
       .style("alignment-baseline", "middle")
       .text(function(d) {
-        if (d.new_first_shot_7d_avg === maxShots) {
-          return (d.new_first_shot_7d_avg / 1000).toLocaleString("pt-BR", { maximumFractionDigits: 1 }) + " mil";
+        if (d.new_first_shot_mov_avg === maxShots) {
+          return (d.new_first_shot_mov_avg / 1000).toLocaleString("pt-BR", { maximumFractionDigits: 1 }) + " mil";
         } else {
-          return (d.new_first_shot_7d_avg / 1000).toLocaleString("pt-BR", { maximumFractionDigits: 1 });
+          return (d.new_first_shot_mov_avg / 1000).toLocaleString("pt-BR", { maximumFractionDigits: 1 });
         }
       })
 

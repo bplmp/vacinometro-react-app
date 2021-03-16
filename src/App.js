@@ -1,7 +1,7 @@
 import './App.css';
 // import updatedAt from "./components/data/updated_at"
 import projections from "./components/data/projections"
-// import milestones from "./components/data/milestones"
+import milestones from "./components/data/milestones"
 import latest from "./components/data/latest"
 import ChartPctVaccinated from "./components/ChartPctVaccinated"
 import ChartDosesGiven from "./components/ChartDosesGiven"
@@ -61,19 +61,24 @@ function App() {
       </section>
       <section>
         <h2 className="tc f2-ns f3 lh-copy b">Quantas primeiras doses estão sendo aplicadas por dia no Brasil?</h2>
-        <p className="tc f3-ns f4 lh-copy normal mt0">O Brasil está aplicando <span className="b">{brLatest.new_first_shot_7d_avg.toLocaleString("pt-BR")} primeiras doses por dia</span>, considerando a média móvel dos últimos 7 dias.</p>
+        <p className="tc f3-ns f4 lh-copy normal mt0">O Brasil está aplicando <span className="b">{brLatest.new_first_shot_mov_avg.toLocaleString("pt-BR")} primeiras doses por dia</span>, considerando a média móvel dos últimos 14 dias.</p>
         <ChartDosesGiven rawData={projections} stateCode="WRL"/>
-        <figcaption className="f6 i mt2">A linha representa a média movel de 7 dias.</figcaption>
+        <figcaption className="f6 i mt2">A linha representa a média movel de 14 dias.</figcaption>
       </section>
       <section className="mt4 bt">
         <h2 className="tc f2-ns f3 lh-copy b mb0">Como está o ritmo da vacinação em cada estado?</h2>
-        <h3 className="tc f4-ns f5 lh-copy normal mb0 mt4">Primeiras doses aplicadas em média por dia</h3>
+        <h3 className="tc f4-ns f5 lh-copy normal mb0 mt4">Primeiras doses aplicadas em média por dia, por estado</h3>
         <ChartDosesGivenByState rawData={latest}/>
-        <figcaption className="f6 i mt2">Dado representa a média movel de 7 dias.</figcaption>
+        <figcaption className="f6 i mt2">Dado representa a média movel de 14 dias.</figcaption>
+        <h3 className="tc f4-ns f5 lh-copy normal mb0 mt4">Dias até 90% da população receber a primeira dose, por estado</h3>
+        <ChartPctVaccinatedByState rawData={milestones}/>
+        <figcaption className="f6 i mt2">Projeção considera a média movel de 14 dias de primeiras doses e população adulta por estado.</figcaption>
       </section>
-      {/*<section className="mt5 bt">
+        {/*
+        <section className="mt5 bt">
         <h2 className="tc f2-ns f3 lh-copy b mb0">Veja os gráficos para cada estado</h2>
-        {STATES.map(state => (
+
+          STATES.map(state => (
           <section key={state.acronym}>
             <h2 className="tc f3-ns f4 lh-copy b mt5">{state.name}</h2>
             <div className="">
@@ -85,14 +90,14 @@ function App() {
               </div>
             </div>
           </section>
-        ))}
-      </section>
-      */}
+        ))
+        </section>
+        */}
       <section className="mt4 bt">
         <h2 className="tc f2-ns f3 lh-copy b mb0">Dados e metodologia</h2>
         <p className="lh-copy">Os dados de vacinação são do <a href={DATA_SOURCE.url} target="_blank" rel="noreferrer">{DATA_SOURCE.text}</a>. Dados de população são estimativas do IBGE, 2020.</p>
         <p className="lh-copy">Consideramos população adulta (elegível para receber a vacina) como os maiores de 18 anos.</p>
-        <p className="lh-copy">A projeção do tempo para vacinar a população adulta com pelo menos uma dose considera a média móvel de 7 dias das novas primeiras doses aplicadas.</p>
+        <p className="lh-copy">A projeção do tempo para vacinar a população adulta com pelo menos uma dose considera a média móvel de 14 dias das novas primeiras doses aplicadas.</p>
         <p className="lh-copy">Inspirado no painel de vacinação do <a href="https://www.nytimes.com/interactive/2020/us/covid-19-vaccine-doses.html">NY Times</a>.</p>
         <p className="lh-copy">Desenvolvido por <a href="https://bernardol.com">Bernardo Loureiro</a> | <a href="https://medidasp.com">Medida SP</a>.</p>
       </section>

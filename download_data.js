@@ -5,8 +5,8 @@ const baseUrl = "https://vacinometro.s3.amazonaws.com/vacinometro/exports"
 const files = [
   "projections.json",
   "latest.json",
-  // "updated_at.json",
-  // "milestones.json",
+  "updated_at.json",
+  "milestones.json",
 ]
 
 

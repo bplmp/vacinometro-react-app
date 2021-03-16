@@ -1,3 +1,19 @@
+```
+{STATES.map(state => (
+  <section key={state.acronym}>
+    <h2 className="tc f3-ns f4 lh-copy b mt5">{state.name}</h2>
+    <div className="">
+      <div className="w-100">
+        <ChartPctVaccinated rawData={projections} stateCode={state.acronym}/>
+      </div>
+      <div className="w-100">
+        <ChartDosesGiven rawData={projections} stateCode={state.acronym}/>
+      </div>
+    </div>
+  </section>
+))}
+```
+
 ## Todo
 
 - ogg tags

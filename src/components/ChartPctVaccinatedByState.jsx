@@ -32,7 +32,7 @@ const ChartPctVaccinatedByState = ({rawData}) => {
 
     var margin = {top: 20, right: 20, bottom: 30, left: 50},
     originalWidth = 600,
-    originalHeight = 600,
+    originalHeight = windowDimensions.width > 480 ? 700 : 900,
     width = originalWidth - margin.left - margin.right,
     height = originalHeight - margin.top - margin.bottom;
 
@@ -61,7 +61,7 @@ const ChartPctVaccinatedByState = ({rawData}) => {
             .range([0, width]);
 
   // Scale the range of the data in the domains
-  x.domain([0, d3.max(data, function(d){ return d.days_until; })])
+  x.domain([0, d3.max(data, function(d){ return d.days_until * 1.1; })])
   y.domain(data.map(function(d) { return d.code; }));
 
   var tooltip = d3.select("body").append("div").attr("class", "tooltip");
@@ -82,6 +82,26 @@ const ChartPctVaccinatedByState = ({rawData}) => {
             .html(`${d.code}: Irá demorar ${d.days_until} dias até vacinar 90% da pop. com 1 dose`);
       })
       .on("mouseout", function(d){ tooltip.style("display", "none");});
+
+  const minDays = d3.min(data, function(d){ return d.days_until; })
+  svg.selectAll(".bar-annotations")
+      .data(data)
+    .enter().append("text")
+      .attr("class", "annotations")
+      .attr("font-size", axisFontSize)
+      .attr("x", function(d) { return x(d.days_until); })
+      .attr("y", function(d) { return y(d.code); })
+      .attr("dy", y.bandwidth() / 2)
+      .attr("dx", "0.25em")
+      .style("text-anchor", "beginning")
+      .style("alignment-baseline", "middle")
+      .text(function(d) {
+        if (d.days_until === minDays) {
+          return (d.days_until).toLocaleString("pt-BR", { maximumFractionDigits: 0 }) + " dias";
+        } else {
+          return (d.days_until).toLocaleString("pt-BR", { maximumFractionDigits: 0 });
+        }
+      })
 
   // Add the X Axis
   svg.append("g")
