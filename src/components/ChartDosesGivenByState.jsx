@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import * as d3 from "d3v4"
 import '../assets/css/ChartDosesGivenByState.scss';
 import cloneDeep from 'lodash/cloneDeep'
+import moment from "moment"
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
@@ -49,7 +50,7 @@ const ChartDosesGivenByState = ({rawData}) => {
     // format the data
     data.forEach(function(d) {
         // d.date = parseTime(d.date);
-        d.date = new Date(d.date);
+        d.date = moment(d.date);
     });
 
   // set the ranges

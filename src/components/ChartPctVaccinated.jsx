@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import * as d3 from "d3v4"
 import '../assets/css/ChartPctVaccinated.scss';
 import cloneDeep from 'lodash/cloneDeep'
+import moment from "moment"
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
@@ -66,7 +67,7 @@ const ChartPctVaccinated = ({rawData, stateCode}) => {
       // format the data
       data.forEach(function(d) {
           // d.date = parseTime(d.date);
-          d.date = new Date(d.date);
+          d.date = moment(d.date);
           d.coverage_first_shot = 100 * Number(d.coverage_first_shot);
           d.milestone = 100 * Number(d.milestone);
       });
@@ -141,7 +142,7 @@ const ChartPctVaccinated = ({rawData, stateCode}) => {
             return "middle"
           }
         })
-        .text(function (d) { return d.date.toLocaleString("pt-PT", {year: "2-digit", month: "2-digit", day: "2-digit"}).replace("/21", "") })
+        .text(function (d) { return d.date.format("DD/MM/YY").replace("/21", "") })
 
       svg.selectAll("annotations-value")
         .data(dataProj)

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import * as d3 from "d3v4"
 import '../assets/css/ChartDosesGiven.scss';
 import cloneDeep from 'lodash/cloneDeep'
+import moment from "moment"
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
@@ -63,7 +64,7 @@ const ChartDosesGiven = ({rawData, stateCode}) => {
       // format the data
       data.forEach(function(d) {
           // d.date = parseTime(d.date);
-          d.date = new Date(d.date);
+          d.date = moment(d.date);
           d.new_first_shot = Number(d.new_first_shot) / 1000;
           d.new_first_shot_mov_avg = Number(d.new_first_shot_mov_avg) / 1000;
           d.milestone = 100 * Number(d.milestone);
@@ -94,7 +95,7 @@ const ChartDosesGiven = ({rawData, stateCode}) => {
                   .style("left", d3.event.pageX - 50 + "px")
                   .style("top", d3.event.pageY - 70 + "px")
                   .style("display", "inline-block")
-                  .html((d.date.toLocaleString("pt-PT", {year: "2-digit", month: "2-digit", day: "2-digit"})) + "<br/>" + Math.round(d.new_first_shot * 1000).toLocaleString("pt-BR") + " primeiras doses aplicadas");
+                  .html((d.date.format("DD/MM/YY")) + "<br/>" + Math.round(d.new_first_shot * 1000).toLocaleString("pt-BR") + " primeiras doses aplicadas");
             })
         		.on("mouseout", function(d){ tooltip.style("display", "none");});
       // Add the valueline path
