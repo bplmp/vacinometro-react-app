@@ -1,7 +1,7 @@
 import './App.css';
 // import updatedAt from "./components/data/updated_at"
 import projections from "./components/data/projections"
-// import milestones from "./components/data/milestones"
+import milestones from "./components/data/milestones"
 import latest from "./components/data/latest"
 import ChartPctVaccinated from "./components/ChartPctVaccinated"
 import ChartDosesGiven from "./components/ChartDosesGiven"
@@ -46,19 +46,28 @@ const DATA_SOURCE = {
 }
 
 function App() {
-  const br = projections['WRL']
-  const brProj = br.filter(row => row.projected === true)
-  const brMainMilestone = brProj.filter(row => row.milestone === MAIN_MILESTONE)[0]
-  const date = new Date(brMainMilestone.date + " 00:00:00").toLocaleString("pt-PT", {year: "numeric", month: "2-digit", day: "2-digit"})
+  // const br = projections['WRL']
+  // const brProj = br.filter(row => row.projected === true)
+  // const brMainMilestone = brProj.filter(row => row.milestone === MAIN_MILESTONE)[0]
+  const brMainMilestone = milestones.filter(row => row.milestone === 0.9 && row.code === "WRL")[0]
+  const brMainMilestoneDate = new Date(brMainMilestone.date + " 00:00:00").toLocaleString("pt-PT", {year: "numeric", month: "2-digit", day: "2-digit"})
   const brLatest = latest.filter(row => row.code === "WRL")[0]
+
+  const oneDay = 24 * 60 * 60 * 1000
+  const daysUntilYearEnd = Math.round(Math.abs((new Date() - new Date(`${(new Date().getFullYear() + 1).toString()}-01-01`)) / oneDay))
+  const daysUntilBrMilestone = brMainMilestone.days_until
+  const timesDosesUntilYearEnd = daysUntilBrMilestone > daysUntilYearEnd ? daysUntilBrMilestone / daysUntilYearEnd : false
 
   return (
     <div className="grid">
       <section>
         <p className="f6 i mt4 tc">Dados atualizados em {new Date(brLatest.date + " 00:00:00").toLocaleString("pt-PT", {year: "numeric", month: "2-digit", day: "2-digit"})}</p>
         <h1 className="tc f2-ns f3 lh-copy b mb3">Quanto tempo até a população brasileira ser vacinada contra o Covid-19?</h1>
-        <p className="tc f3-ns f4 lh-copy normal mt0">No ritmo atual, demoraria até <span className="b">{date}</span> para que <span className="b">{MAIN_MILESTONE * 100}%</span> da população adulta do Brasil recebesse <span className="b">pelo menos 1 dose</span> da vacina.</p>
+        <p className="tc f3-ns f4 lh-copy normal mt0">No ritmo atual, demoraria até <span className="b">{brMainMilestoneDate}</span> para que <span className="b">{MAIN_MILESTONE * 100}%</span> da população adulta do Brasil recebesse <span className="b">pelo menos 1 dose</span> da vacina.</p>
         <ChartPctVaccinated rawData={projections} stateCode="WRL"/>
+        {timesDosesUntilYearEnd &&
+          <p className="tc f3-ns f4 lh-copy normal mt4">Precisamos vacinar <span className="b">{timesDosesUntilYearEnd.toLocaleString("pt-BR", { maximumFractionDigits: 2 })} vezes mais rápido</span> para que 90% da população receba pelo menos uma dose <span className="b">até o fim do ano</span>.</p>
+        }
       </section>
       <section>
         <h2 className="tc f2-ns f3 lh-copy b">Quantas primeiras doses estão sendo aplicadas por dia no Brasil?</h2>
