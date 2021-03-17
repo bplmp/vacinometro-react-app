@@ -66,7 +66,7 @@ const ChartPctVaccinated = ({rawData, stateCode}) => {
       // format the data
       data.forEach(function(d) {
           // d.date = parseTime(d.date);
-          d.date = new Date(d.date + " 00:00:00");
+          d.date = new Date(d.date);
           d.coverage_first_shot = 100 * Number(d.coverage_first_shot);
           d.milestone = 100 * Number(d.milestone);
       });

@@ -63,7 +63,7 @@ const ChartDosesGiven = ({rawData, stateCode}) => {
       // format the data
       data.forEach(function(d) {
           // d.date = parseTime(d.date);
-          d.date = new Date(d.date + " 00:00:00");
+          d.date = new Date(d.date);
           d.new_first_shot = Number(d.new_first_shot) / 1000;
           d.new_first_shot_mov_avg = Number(d.new_first_shot_mov_avg) / 1000;
           d.milestone = 100 * Number(d.milestone);
