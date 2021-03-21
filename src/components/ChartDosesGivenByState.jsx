@@ -62,8 +62,44 @@ const ChartDosesGivenByState = ({rawData}) => {
             .range([0, width]);
 
   // Scale the range of the data in the domains
-  x.domain([0, d3.max(data, function(d){ return d.new_first_shot_mov_avg * 1.15; })])
+  const xDataMax = d3.max(data, (d => d.new_first_shot_mov_avg))
+  const xScaleModule = 20000
+  const xScaleMax = xDataMax + Math.abs((xDataMax % xScaleModule) - xScaleModule)
+  const ticksNumber = xScaleMax / xScaleModule
+
+  x.domain([0, xScaleMax])
   y.domain(data.map(function(d) { return d.code; }));
+
+  // add the X gridlines
+  svg.append("g")
+      .attr("class", "axis-grid")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x)
+          .ticks(ticksNumber)
+          .tickSize(-height)
+          .tickFormat("")
+      )
+
+  // Add the X Axis
+  svg.append("g")
+      .style("font", `${axisFontSize} Bitter`)
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x)
+        .ticks(ticksNumber)
+        .tickFormat(function(d, i, n) {
+            console.log(d)
+            return n[i + 1] ? (d / 1000) : (d / 1000 + " mil")
+          })
+              // .ticks(d3.timeYear)
+              // .tickFormat(d3.timeFormat("%d/%m/%y"))
+      )
+      // .select(".domain").remove();
+
+  // add the y Axis
+  svg.append("g")
+      .style("font", `${axisFontSize} Bitter`)
+      .call(d3.axisLeft(y)
+    );
 
   // append the rectangles for the bar chart
   var tooltip = d3.select("body").append("div").attr("class", "tooltip");
@@ -104,28 +140,6 @@ const ChartDosesGivenByState = ({rawData}) => {
         }
       })
 
-  // Add the X Axis
-  svg.append("g")
-      .style("font", `${axisFontSize} Bitter`)
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x)
-        .tickFormat(function(d) {
-            var mod = windowDimensions.width > 480 ? 10000 : 10000
-            var t = d % mod
-            if (t === 0) {
-              return (d / 1000 + " mil")
-            }
-          })
-              // .ticks(d3.timeYear)
-              // .tickFormat(d3.timeFormat("%d/%m/%y"))
-      )
-      // .select(".domain").remove();
-
-  // add the y Axis
-  svg.append("g")
-      .style("font", `${axisFontSize} Bitter`)
-      .call(d3.axisLeft(y)
-    );
 
   }, [data, chartId, windowDimensions.width]);
 
