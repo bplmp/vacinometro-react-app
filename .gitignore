@@ -27,3 +27,6 @@ yarn-error.log*
 python-env/
 secrets.yml
 secrets.yaml
+
+*__pycache__*
+data.csv

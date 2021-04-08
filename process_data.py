@@ -3,8 +3,12 @@ from io import StringIO
 import pandas as pd
 import numpy as np
 import json
+import random
 from pathlib import Path
 from scipy import stats
+from user_agents import agents
+
+USER_AGENT = random.choice(agents)
 
 EXPORT_FOLDER = 'src/components/data'
 Path(EXPORT_FOLDER).mkdir(parents=True, exist_ok=True)
@@ -48,31 +52,33 @@ ADULT_POPULATION = {
 
 
 def request_data():
+    print('---> requesting data')
     headers = {
-    'authority': 'arte.folha.uol.com.br',
-    'pragma': 'no-cache',
-    'cache-control': 'no-cache',
-    # 'sec-ch-ua': '"Chromium";v="88", "Google Chrome";v="88", ";Not A Brand";v="99"',
-    'accept': 'application/json, text/plain, */*',
-    # 'sec-ch-ua-mobile': '?0',
-    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36',
-    'sec-fetch-site': 'same-origin',
-    'sec-fetch-mode': 'cors',
-    'sec-fetch-dest': 'empty',
-    'referer': 'https://arte.folha.uol.com.br/ciencia/2021/veja-como-esta-a-vacinacao/brasil/',
-    'accept-language': 'pt-BR',
+        'authority': 'arte.folha.uol.com.br',
+        'pragma': 'no-cache',
+        'cache-control': 'no-cache',
+        'accept': 'application/json, text/plain, */*',
+        'user-agent': USER_AGENT,
+        'sec-fetch-site': 'same-origin',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-dest': 'empty',
+        'referer': 'https://arte.folha.uol.com.br/ciencia/2021/veja-como-esta-a-vacinacao/brasil/',
+        'accept-language': 'pt-BR',
     }
     response = requests.get('https://arte.folha.uol.com.br//databases/ciencia/2021/vacina/consortium.csv', headers=headers)
+    print('---> data requested')
     csv_string = StringIO(response.content.decode('utf-8'))
     df = pd.read_csv(csv_string, sep=",")
+    # df.to_csv('data.csv', index=False)
+    # df = pd.read_csv('data.csv')
     return df
 
 
 def project_data(df, code, outliers=False):
-    code = code
     pop = ADULT_POPULATION[code]
     df_tmp = df[df.code == code]
-    df_tmp['new_first_shot'] = abs(df_tmp.total_first_shot.diff())
+    # df_tmp['new_first_shot'] = abs(df_tmp.total_first_shot.diff())
+    df_tmp['new_first_shot'] = df_tmp.first_shot_today
 
     df_tmp['coverage_first_shot'] = df_tmp['coverage_first_shot'] / 100
     df_tmp['projected'] = False
@@ -151,6 +157,12 @@ df = request_data()
 df['date'] = pd.to_datetime(df.date)
 df.head()
 pd.options.mode.chained_assignment = None
+
+# drop duplicate rows
+df = df.sort_values(['code', 'date']).sort_values('first_shot_today', ascending=False).drop_duplicates(subset=['code', 'date'], keep='first')
+
+# fix first_shot column
+df['total_first_shot'] = df.total - df.total_second_shot
 
 final_frames = []
 milestone_frames = []
