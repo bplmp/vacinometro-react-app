@@ -32,7 +32,7 @@ const ChartDosesGiven = ({rawData, stateCode}) => {
     const annotationFontSize = windowDimensions.width > 480 ? "1em" : "1.5em"
     const axisFontSize = windowDimensions.width > 480 ? "0.8em" : "1.3em"
 
-    var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    var margin = {top: 20, right: 20, bottom: 30, left: 60},
     originalWidth = 600,
     originalHeight = 400,
     width = originalWidth - margin.left - margin.right,
@@ -184,14 +184,18 @@ const ChartDosesGiven = ({rawData, stateCode}) => {
       // }
 
       // Add the X Axis
-      svg.append("g")
+      d3.json("https://cdn.jsdelivr.net/npm/d3-time-format@3/locale/pt-BR.json", function(error, locale) {
+        if (error) throw error;
+        d3.timeFormatDefaultLocale(locale);
+        svg.append("g")
           .style("font", `${axisFontSize} Bitter`)
           .attr("transform", "translate(0," + height + ")")
           .call(d3.axisBottom(x)
-                  // .ticks(d3.timeYear)
-                  .tickFormat(d3.timeFormat("%d/%m"))
-          )
-          // .select(".domain").remove();
+          .ticks(d3.timeMonth)
+          .tickFormat(d3.timeFormat("%b"))
+        )
+        // .select(".domain").remove();
+      });
 
   }, [data, chartId, windowDimensions.width]);
 

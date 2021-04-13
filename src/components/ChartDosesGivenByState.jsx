@@ -31,7 +31,7 @@ const ChartDosesGivenByState = ({rawData}) => {
     const annotationFontSize = windowDimensions.width > 480 ? "1em" : "1.5em"
     const axisFontSize = windowDimensions.width > 480 ? "0.8em" : "1.3em"
 
-    var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    var margin = {top: 20, right: 50, bottom: 30, left: 50},
     originalWidth = 600,
     originalHeight = windowDimensions.width > 480 ? 700 : 900,
     width = originalWidth - margin.left - margin.right,
@@ -70,15 +70,15 @@ const ChartDosesGivenByState = ({rawData}) => {
   x.domain([0, xScaleMax])
   y.domain(data.map(function(d) { return d.code; }));
 
-  // add the X gridlines
-  svg.append("g")
-      .attr("class", "axis-grid")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x)
-          .ticks(ticksNumber)
-          .tickSize(-height)
-          .tickFormat("")
-      )
+  // // add the X gridlines
+  // svg.append("g")
+  //     .attr("class", "axis-grid")
+  //     .attr("transform", "translate(0," + height + ")")
+  //     .call(d3.axisBottom(x)
+  //         .ticks(ticksNumber)
+  //         .tickSize(-height)
+  //         .tickFormat("")
+  //     )
 
   // Add the X Axis
   svg.append("g")
