@@ -113,7 +113,7 @@ function App() {
         <p className="lh-copy">Consideramos população adulta (elegível para receber a vacina) como os maiores de 18 anos.</p>
         <p className="lh-copy">A projeção do tempo para vacinar a população adulta com pelo menos uma dose considera a média móvel de {MOVING_AVG} dias das novas primeiras doses aplicadas.</p>
         <p className="lh-copy">Inspirado no painel de vacinação do <a href="https://www.nytimes.com/interactive/2020/us/covid-19-vaccine-doses.html">NY Times</a>.</p>
-        <p className="lh-copy">Desenvolvido por <a href="https://twitter.com/bernardomaps">Bernardo Loureiro</a> | Medida SP.</p>
+        <p className="lh-copy">Desenvolvido por <a href="https://twitter.com/bernardomaps">Bernardo Loureiro | Medida SP</a>.</p>
       </section>
     </div>
   );
