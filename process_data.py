@@ -80,7 +80,8 @@ def project_data(df, code, outliers=False):
     # df_tmp['new_first_shot'] = abs(df_tmp.total_first_shot.diff())
     df_tmp['new_first_shot'] = df_tmp.first_shot_today
 
-    df_tmp['coverage_first_shot'] = df_tmp['coverage_first_shot'] / 100
+    # df_tmp['coverage_first_shot'] = df_tmp['coverage_first_shot'] / 100
+    df_tmp['coverage_first_shot'] = df_tmp['total_first_shot'] / pop
     df_tmp['projected'] = False
 
     # find outliers
@@ -204,6 +205,8 @@ df_latest.to_json(f'{EXPORT_FOLDER}/latest.json', orient='records')
 # milestones = pd.concat(milestone_frames)
 # final.to_json(ff'{EXPORT_FOLDER}/projections.json', orient='records')
 # milestones.to_json(ff'{EXPORT_FOLDER}/milestones.json', orient='records')
+
+df_final[df_final.code == 'WRL']
 
 with open(f'{EXPORT_FOLDER}/projections.json', 'w') as f:
     json.dump(final, f)

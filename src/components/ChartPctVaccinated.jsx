@@ -172,7 +172,7 @@ const ChartPctVaccinated = ({rawData, stateCode}) => {
           .style("font", `${axisFontSize} Bitter`)
           .attr("transform", "translate(0," + height + ")")
           .call(d3.axisBottom(x)
-                  .ticks(d3.timeYear)
+                  .ticks(d3.timeMonth)
           )
           // .select(".domain").remove();
 
