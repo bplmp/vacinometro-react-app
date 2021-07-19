@@ -191,7 +191,7 @@ const ChartDosesGiven = ({rawData, stateCode}) => {
           .style("font", `${axisFontSize} Bitter`)
           .attr("transform", "translate(0," + height + ")")
           .call(d3.axisBottom(x)
-          .ticks(d3.timeMonth)
+          .ticks(d3.timeMonth, 1)
           .tickFormat(d3.timeFormat("%b"))
         )
         // .select(".domain").remove();

@@ -173,6 +173,7 @@ const ChartPctVaccinated = ({rawData, stateCode}) => {
           .attr("transform", "translate(0," + height + ")")
           .call(d3.axisBottom(x)
                   .ticks(d3.timeMonth)
+                  .tickFormat(d3.timeFormat("%b"))
           )
           // .select(".domain").remove();
 

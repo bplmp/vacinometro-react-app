@@ -163,7 +163,8 @@ pd.options.mode.chained_assignment = None
 df = df.sort_values(['code', 'date']).sort_values('first_shot_today', ascending=False).drop_duplicates(subset=['code', 'date'], keep='first')
 
 # fix first_shot column
-df['total_first_shot'] = df.total - df.total_second_shot
+# df['total_first_shot'] = df.total - df.total_second_shot
+df['total_first_shot'] = df.total_at_least_one_shot
 
 final_frames = []
 milestone_frames = []
