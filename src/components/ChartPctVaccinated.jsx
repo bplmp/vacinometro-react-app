@@ -71,6 +71,7 @@ const ChartPctVaccinated = ({rawData, stateCode}) => {
           d.coverage_first_shot = 100 * Number(d.coverage_first_shot);
           d.milestone = 100 * Number(d.milestone);
       });
+      console.log(data);
 
       // Scale the range of the data
       x.domain(d3.extent(data, function(d) { return d.date; }));
@@ -78,7 +79,7 @@ const ChartPctVaccinated = ({rawData, stateCode}) => {
       y.domain([0, 100]);
 
       const dataReal = data.filter(row => row.projected === false)
-      const dataProj = data.filter(row => row.projected === true)
+      const dataProj = data.filter(row => row.projected === true && row.milestone !== 70)
       dataProj.unshift(dataReal[dataReal.length - 1])
 
       // Add the valueline path.
@@ -118,7 +119,7 @@ const ChartPctVaccinated = ({rawData, stateCode}) => {
         .attr("r", 5)
 
       if (windowDimensions.width <= 480) {
-        dataProj.splice(-1,1)
+        // dataProj.splice(-1,1)
       }
 
       svg.selectAll("annotations-date")
@@ -129,17 +130,17 @@ const ChartPctVaccinated = ({rawData, stateCode}) => {
         .attr("y", function(d) { return y(d.coverage_first_shot) })
         .attr("dy", function (d) {
           if (d.milestone) {
-            return "-1em"
+            return "3.5em"
           } else {
-            return "-1.5em"
+            return "-1em"
           }
         })
         .attr("font-size", annotationFontSize)
         .attr("text-anchor", function (d) {
           if (d.milestone) {
-            return "end"
-          } else {
             return "middle"
+          } else {
+            return "end"
           }
         })
         .text(function (d) { return d.date.format("DD/MM/YY").replace("/21", "") })
@@ -152,17 +153,17 @@ const ChartPctVaccinated = ({rawData, stateCode}) => {
         .attr("y", function(d) { return y(d.coverage_first_shot) })
         .attr("dy", function (d) {
           if (d.milestone) {
-            return "-2.5em"
+            return "2.25em"
           } else {
-            return "-3em"
+            return "-2.25em"
           }
         })
         .attr("font-size", annotationFontSize)
         .attr("text-anchor", function (d) {
           if (d.milestone) {
-            return "end"
-          } else {
             return "middle"
+          } else {
+            return "end"
           }
         })
         .text(function (d) { return (d.milestone || d.coverage_first_shot.toFixed(1)) + "%" })

@@ -87,7 +87,7 @@ const ChartDosesGivenByState = ({rawData}) => {
       .call(d3.axisBottom(x)
         .ticks(ticksNumber)
         .tickFormat(function(d, i, n) {
-            console.log(d)
+            // console.log(d)
             return n[i + 1] ? (d / 1000) : (d / 1000 + " mil")
           })
               // .ticks(d3.timeYear)
