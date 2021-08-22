@@ -12,10 +12,10 @@ function getWindowDimensions() {
   };
 }
 
-const ChartDosesGiven = ({rawData, stateCode}) => {
+const ChartDosesGiven = ({rawData, stateCode, shotColMa, shotCol}) => {
   // console.log(data)
   const data = cloneDeep(rawData[stateCode].filter(row => row.projected === false))
-  const chartId = `doses-${stateCode}`
+  const chartId = `doses-${stateCode}-${shotCol}`
 
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
@@ -65,14 +65,14 @@ const ChartDosesGiven = ({rawData, stateCode}) => {
       data.forEach(function(d) {
           // d.date = parseTime(d.date);
           d.date = moment(d.date);
-          d.new_first_shot = Number(d.new_first_shot) / 1000;
-          d.new_first_shot_mov_avg = Number(d.new_first_shot_mov_avg) / 1000;
+          d[shotCol] = Number(d[shotCol]) / 1000;
+          d[shotColMa] = Number(d[shotColMa]) / 1000;
           d.milestone = 100 * Number(d.milestone);
       });
 
       // Scale the range of the data
       x.domain(d3.extent(data, function(d) { return d.date; }));
-      y.domain([0, d3.max(data, d => d.new_first_shot * 1.05)]);
+      y.domain([0, d3.max(data, d => d[shotCol] * 1.05)]);
 
       var tooltip = d3.select("body").append("div").attr("class", "tooltip");
       const barWidth = width / data.length
@@ -88,14 +88,14 @@ const ChartDosesGiven = ({rawData, stateCode}) => {
             })
             .attr("x", function(d) { return x(d.date) - barWidth; })
             .attr("width", barWidth)
-            .attr("y", function(d) { return y(d.new_first_shot); })
-            .attr("height", function(d) { return height - y(d.new_first_shot); })
+            .attr("y", function(d) { return y(d[shotCol]); })
+            .attr("height", function(d) { return height - y(d[shotCol]); })
             .on("mousemove", function(d){
                 tooltip
                   .style("left", d3.event.pageX - 50 + "px")
                   .style("top", d3.event.pageY - 70 + "px")
                   .style("display", "inline-block")
-                  .html((d.date.format("DD/MM/YY")) + "<br/>" + Math.round(d.new_first_shot * 1000).toLocaleString("pt-BR") + " primeiras doses aplicadas");
+                  .html((d.date.format("DD/MM/YY")) + "<br/>" + Math.round(d[shotCol] * 1000).toLocaleString("pt-BR") + " doses aplicadas");
             })
         		.on("mouseout", function(d){ tooltip.style("display", "none");});
       // Add the valueline path
@@ -103,8 +103,8 @@ const ChartDosesGiven = ({rawData, stateCode}) => {
       var valueline = d3.line()
           .curve(d3.curveStep)
           .x(function(d) { return x(d.date); })
-          .y(function(d) { return y(d.new_first_shot_mov_avg); });
-      const dataLine = data.filter(row => row.new_first_shot_mov_avg > 0)
+          .y(function(d) { return y(d[shotColMa]); });
+      const dataLine = data.filter(row => row[shotColMa] > 0)
       svg.append("path")
           .data([dataLine])
           .attr("class", "line-avg")
@@ -118,7 +118,7 @@ const ChartDosesGiven = ({rawData, stateCode}) => {
           .attr("x1", function(d) { return x(lastAvgPoint[0].date) })
           .attr("y1", "2.5em")
           .attr("x2", function(d) { return x(lastAvgPoint[0].date) })
-          .attr("y2", function(d) { return y(lastAvgPoint[0].new_first_shot_mov_avg) })
+          .attr("y2", function(d) { return y(lastAvgPoint[0][shotColMa]) })
 
       svg.selectAll("points")
         .data(lastAvgPoint)
@@ -128,7 +128,7 @@ const ChartDosesGiven = ({rawData, stateCode}) => {
         .attr("stroke", "black")
         .attr("stroke-width", "0")
         .attr("cx", function(d) { return x(d.date) })
-        .attr("cy", function(d) { return y(d.new_first_shot_mov_avg) })
+        .attr("cy", function(d) { return y(d[shotColMa]) })
         .attr("r", 5)
 
     svg.selectAll("points-annotation")
@@ -136,18 +136,18 @@ const ChartDosesGiven = ({rawData, stateCode}) => {
       .enter()
       .append("text")
       .attr("x", function(d) { return x(d.date) })
-      .attr("y", function(d) { return y(d.new_first_shot_mov_avg) * 0 })
+      .attr("y", function(d) { return y(d[shotColMa]) * 0 })
       .attr("dy", "0")
       .attr("class", "annotations")
       .attr("font-size", annotationFontSize)
       .attr("text-anchor", "end")
-      .text(function (d) { return (Math.round(d.new_first_shot_mov_avg * 10) / 10).toLocaleString("pt-BR") + " mil primeiras doses"})
+      .text(function (d) { return (Math.round(d[shotColMa] * 10) / 10).toLocaleString("pt-BR") + " mil doses"})
     svg.selectAll("points-annotation-avg")
       .data(lastAvgPoint)
       .enter()
       .append("text")
       .attr("x", function(d) { return x(d.date) })
-      .attr("y", function(d) { return y(d.new_first_shot_mov_avg) * 0 })
+      .attr("y", function(d) { return y(d[shotColMa]) * 0 })
       .attr("dy", "1.5em")
       .attr("class", "annotations")
       .attr("font-size", annotationFontSize)

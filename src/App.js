@@ -1,8 +1,13 @@
 import './App.css';
 // import updatedAt from "./components/data/updated_at"
-import projections from "./components/data/projections"
-import milestones from "./components/data/milestones"
-import latest from "./components/data/latest"
+import projections_first from "./components/data/coverage_first_shot/projections"
+import milestones_first from "./components/data/coverage_first_shot/milestones"
+import latest_first from "./components/data/coverage_first_shot/latest"
+
+import projections_full from "./components/data/coverage_fully_vaccinated/projections"
+import milestones_full from "./components/data/coverage_fully_vaccinated/milestones"
+import latest_full from "./components/data/coverage_fully_vaccinated/latest"
+
 import ChartPctVaccinated from "./components/ChartPctVaccinated"
 import ChartDosesGiven from "./components/ChartDosesGiven"
 // import ChartPctVaccinatedByState from "./components/ChartPctVaccinatedByState"
@@ -47,39 +52,60 @@ const DATA_SOURCE = {
 }
 
 function App() {
-  // const br = projections['WRL']
-  // const brProj = br.filter(row => row.projected === true)
-  // const brMainMilestone = brProj.filter(row => row.milestone === MAIN_MILESTONE)[0]
-  const brMainMilestone = milestones.filter(row => row.milestone === 0.9 && row.code === "WRL")[0]
-  const brMainMilestoneDate = moment(brMainMilestone.date).format('DD/MM/YYYY')
-  const brLatest = latest.filter(row => row.code === "WRL")[0]
+  const brLatest = latest_first.filter(row => row.code === "WRL")[0]
+
+  const brMainMilestoneFirst = milestones_first.filter(row => row.milestone === 0.9 && row.code === "WRL")[0]
+  const brMainMilestoneDateFirst = moment(brMainMilestoneFirst.date).format('DD/MM/YYYY')
+  const brMainMilestoneFull = milestones_full.filter(row => row.milestone === 0.9 && row.code === "WRL")[0]
+  const brMainMilestoneDateFull = moment(brMainMilestoneFull.date).format('DD/MM/YYYY')
 
   const oneDay = 24 * 60 * 60 * 1000
   const daysUntilYearEnd = Math.round(Math.abs((new Date() - new Date(`${(new Date().getFullYear() + 1).toString()}-01-01`)) / oneDay))
-  const daysUntilBrMilestone = brMainMilestone.days_until
-  const timesDosesUntilYearEnd = daysUntilBrMilestone > daysUntilYearEnd ? daysUntilBrMilestone / daysUntilYearEnd : false
+
+  const daysUntilBrMilestoneFirst = brMainMilestoneFirst.days_until
+  const timesDosesUntilYearEndFirst = daysUntilBrMilestoneFirst > daysUntilYearEnd ? daysUntilBrMilestoneFirst / daysUntilYearEnd : false
+  const daysUntilBrMilestoneFull = brMainMilestoneFull.days_until
+  const timesDosesUntilYearEndFull = daysUntilBrMilestoneFull > daysUntilYearEnd ? daysUntilBrMilestoneFull / daysUntilYearEnd : false
 
   return (
     <div className="grid">
       <section>
         <p className="f6 i mt4 tc">Dados atualizados em {moment(brLatest.date).format('DD/MM/YYYY')}</p>
-        <h1 className="tc f2-ns f3 lh-copy b mb3">Quanto tempo até a população brasileira ser vacinada contra o Covid-19?</h1>
-        <p className="tc f3-ns f4 lh-copy normal mt0">No ritmo atual, demoraria até <span className="b">{brMainMilestoneDate}</span> para que <span className="b">{MAIN_MILESTONE * 100}%</span> da população adulta do Brasil recebesse <span className="b">pelo menos 1 dose</span> da vacina.</p>
-        <ChartPctVaccinated rawData={projections} stateCode="WRL"/>
-        {timesDosesUntilYearEnd &&
-          <p className="tc f3-ns f4 lh-copy normal mt4">Precisamos vacinar <span className="b">{timesDosesUntilYearEnd.toLocaleString("pt-BR", { maximumFractionDigits: 2 })} vezes mais rápido</span> para que 90% da população receba pelo menos uma dose <span className="b">até o fim do ano</span>.</p>
+        <h1 className="tc f2-ns f3 lh-copy b mb3">Quanto tempo até a população brasileira ser vacinada contra a Covid-19?</h1>
+
+        <h2 className="tc f2-ns f3 bb pb2 mt4">Primeira dose</h2>
+        <p className="tc f4-ns f5 lh-copy normal mt0">No ritmo atual, demoraria até <span className="b">{brMainMilestoneDateFirst}</span> para que <span className="b">{MAIN_MILESTONE * 100}%</span> da população adulta do Brasil recebesse <span className="b">pelo menos 1 dose</span> da vacina.</p>
+        <ChartPctVaccinated rawData={projections_first} stateCode="WRL" coverageCol="coverage_first_shot"/>
+        {timesDosesUntilYearEndFirst &&
+          <p className="tc f3-ns f4 lh-copy normal mt4">Precisamos vacinar <span className="b">{timesDosesUntilYearEndFirst.toLocaleString("pt-BR", { maximumFractionDigits: 2 })} vezes mais rápido</span> para que 90% da população receba pelo menos uma dose <span className="b">até o fim do ano</span>.</p>
+        }
+
+        <h2 className="tc f2-ns f3 bb pb2 mt4">Imunização completa</h2>
+        <p className="tc f4-ns f5 lh-copy normal mt0">No ritmo atual, demoraria até <span className="b">{brMainMilestoneDateFull}</span> para que <span className="b">{MAIN_MILESTONE * 100}%</span> da população adulta do Brasil recebesse <span className="b">imunização completa</span> (duas doses ou dose única).</p>
+        <ChartPctVaccinated rawData={projections_full} stateCode="WRL" coverageCol="coverage_fully_vaccinated"/>
+        {timesDosesUntilYearEndFull &&
+          <p className="tc f3-ns f4 lh-copy normal mt4">Precisamos vacinar <span className="b">{timesDosesUntilYearEndFull.toLocaleString("pt-BR", { maximumFractionDigits: 2 })} vezes mais rápido</span> para que 90% da população receba imunização completa <span className="b">até o fim do ano</span>.</p>
         }
       </section>
       <section>
         <h2 className="tc f2-ns f3 lh-copy b">Quantas primeiras doses estão sendo aplicadas por dia no Brasil?</h2>
         <p className="tc f3-ns f4 lh-copy normal mt0">O Brasil está aplicando <span className="b">{brLatest.new_first_shot_mov_avg.toLocaleString("pt-BR")} primeiras doses por dia</span>, considerando a média móvel dos últimos {MOVING_AVG} dias.</p>
-        <ChartDosesGiven rawData={projections} stateCode="WRL"/>
+        <ChartDosesGiven rawData={projections_first} stateCode="WRL" shotColMa="new_first_shot_mov_avg" shotCol="new_first_shot"/>
+        <figcaption className="f6 i mt2">A linha representa a média movel de {MOVING_AVG} dias.</figcaption>
+      </section>
+      <section>
+        <h2 className="tc f2-ns f3 lh-copy b">Quantas segundas doses (ou doses únicas) estão sendo aplicadas por dia no Brasil?</h2>
+        <p className="tc f3-ns f4 lh-copy normal mt0">O Brasil está aplicando <span className="b">{brLatest.new_fully_vaccinated_mov_avg.toLocaleString("pt-BR")} segundas doses por dia</span>, considerando a média móvel dos últimos {MOVING_AVG} dias.</p>
+        <ChartDosesGiven rawData={projections_full} stateCode="WRL" shotColMa="new_fully_vaccinated_mov_avg" shotCol="new_fully_vaccinated"/>
         <figcaption className="f6 i mt2">A linha representa a média movel de {MOVING_AVG} dias.</figcaption>
       </section>
       <section className="mt4 bt">
         <h2 className="tc f2-ns f3 lh-copy b mb0">Como está o ritmo da vacinação em cada estado?</h2>
         <h3 className="tc f4-ns f5 lh-copy normal mb0 mt4">Primeiras doses aplicadas em média por dia, por estado</h3>
-        <ChartDosesGivenByState rawData={latest}/>
+        <ChartDosesGivenByState rawData={latest_first} shotColMa="new_first_shot_mov_avg"/>
+        <figcaption className="f6 i mt2">Dado representa a média movel de {MOVING_AVG} dias.</figcaption>
+        <h3 className="tc f4-ns f5 lh-copy normal mb0 mt4">Segundas doses aplicadas em média por dia, por estado</h3>
+        <ChartDosesGivenByState rawData={latest_full} shotColMa="new_fully_vaccinated_mov_avg"/>
         <figcaption className="f6 i mt2">Dado representa a média movel de {MOVING_AVG} dias.</figcaption>
         {/*
         <h3 className="tc f4-ns f5 lh-copy normal mb0 mt4">Dias até 90% da população receber a primeira dose, por estado</h3>

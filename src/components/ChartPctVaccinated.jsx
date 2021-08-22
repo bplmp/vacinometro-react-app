@@ -12,9 +12,9 @@ function getWindowDimensions() {
   };
 }
 
-const ChartPctVaccinated = ({rawData, stateCode}) => {
+const ChartPctVaccinated = ({rawData, stateCode, coverageCol}) => {
   const data = cloneDeep(rawData[stateCode])
-  const chartId = `pct-vaccinated-${stateCode}`
+  const chartId = `pct-vaccinated-${stateCode}-${coverageCol}`
 
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
@@ -47,7 +47,7 @@ const ChartPctVaccinated = ({rawData, stateCode}) => {
     // define the line
     var valueline = d3.line()
         .x(function(d) { return x(d.date); })
-        .y(function(d) { return y(d.coverage_first_shot); });
+        .y(function(d) { return y(d[coverageCol]); });
 
     // append the svg obgect to the body of the page
     // appends a 'group' element to 'svg'
@@ -68,7 +68,7 @@ const ChartPctVaccinated = ({rawData, stateCode}) => {
       data.forEach(function(d) {
           // d.date = parseTime(d.date);
           d.date = moment(d.date);
-          d.coverage_first_shot = 100 * Number(d.coverage_first_shot);
+          d[coverageCol] = 100 * Number(d[coverageCol]);
           d.milestone = 100 * Number(d.milestone);
       });
       console.log(data);
@@ -115,7 +115,7 @@ const ChartPctVaccinated = ({rawData, stateCode}) => {
         })
         .attr("stroke-width", "2")
         .attr("cx", function(d) { return x(d.date) })
-        .attr("cy", function(d) { return y(d.coverage_first_shot) })
+        .attr("cy", function(d) { return y(d[coverageCol]) })
         .attr("r", 5)
 
       if (windowDimensions.width <= 480) {
@@ -127,7 +127,7 @@ const ChartPctVaccinated = ({rawData, stateCode}) => {
         .enter()
         .append("text")
         .attr("x", function(d) { return x(d.date) })
-        .attr("y", function(d) { return y(d.coverage_first_shot) })
+        .attr("y", function(d) { return y(d[coverageCol]) })
         .attr("dy", function (d) {
           if (d.milestone) {
             return "3.5em"
@@ -150,7 +150,7 @@ const ChartPctVaccinated = ({rawData, stateCode}) => {
         .enter()
         .append("text")
         .attr("x", function(d) { return x(d.date) })
-        .attr("y", function(d) { return y(d.coverage_first_shot) })
+        .attr("y", function(d) { return y(d[coverageCol]) })
         .attr("dy", function (d) {
           if (d.milestone) {
             return "2.25em"
@@ -166,7 +166,7 @@ const ChartPctVaccinated = ({rawData, stateCode}) => {
             return "end"
           }
         })
-        .text(function (d) { return (d.milestone || d.coverage_first_shot.toFixed(1)) + "%" })
+        .text(function (d) { return (d.milestone || d[coverageCol].toFixed(1)) + "%" })
 
       // Add the X Axis
       svg.append("g")
