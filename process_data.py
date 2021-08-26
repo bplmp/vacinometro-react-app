@@ -192,8 +192,8 @@ def run(SHOT_COL, COVERAGE_COL):
 
     df.columns.values
 
-    df[df.code == 'WRL'][['date', 'coverage_first_shot']].sort_values('date').set_index('date').plot.line()
-    df[df.code == 'WRL'][['date', 'fully_vaccinated']].sort_values('date').set_index('date').plot.line()
+    # df[df.code == 'WRL'][['date', 'coverage_first_shot']].sort_values('date').set_index('date').plot.line()
+    # df[df.code == 'WRL'][['date', 'fully_vaccinated']].sort_values('date').set_index('date').plot.line()
 
     final_frames = []
     milestone_frames = []
