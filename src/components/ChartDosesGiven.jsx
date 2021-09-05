@@ -32,7 +32,7 @@ const ChartDosesGiven = ({rawData, stateCode, shotColMa, shotCol}) => {
     const annotationFontSize = windowDimensions.width > 480 ? "1em" : "1.5em"
     const axisFontSize = windowDimensions.width > 480 ? "0.8em" : "1.3em"
 
-    var margin = {top: 20, right: 20, bottom: 30, left: 60},
+    var margin = {top: 20, right: 20, bottom: 30, left: 70},
     originalWidth = 600,
     originalHeight = 400,
     width = originalWidth - margin.left - margin.right,
@@ -161,13 +161,14 @@ const ChartDosesGiven = ({rawData, stateCode, shotColMa, shotCol}) => {
       svg.append("g")
           .style("font", `${axisFontSize} Bitter`)
           .call(d3.axisLeft(y)
-                  .tickFormat(function(d) {
-                      var mod = windowDimensions.width > 480 ? 50 : 100
-                      var t = d % mod
-                      if (t === 0) {
-                        return d
-                      }
-                    })
+                  // .tickFormat(function(d) {
+                  //     var mod = windowDimensions.width > 480 ? 50 : 200
+                  //     var t = d % mod
+                  //     if (t === 0) {
+                  //       return d
+                  //     }
+                  //   })
+                  .ticks(5)
         )
         // .select(".domain").remove();
 

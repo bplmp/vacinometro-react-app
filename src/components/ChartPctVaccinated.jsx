@@ -71,7 +71,7 @@ const ChartPctVaccinated = ({rawData, stateCode, coverageCol}) => {
           d[coverageCol] = 100 * Number(d[coverageCol]);
           d.milestone = 100 * Number(d.milestone);
       });
-      console.log(data);
+      // console.log(data);
 
       // Scale the range of the data
       x.domain(d3.extent(data, function(d) { return d.date; }));

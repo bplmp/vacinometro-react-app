@@ -31,7 +31,7 @@ const ChartDosesGivenByState = ({rawData, shotColMa}) => {
     const annotationFontSize = windowDimensions.width > 480 ? "1em" : "1.5em"
     const axisFontSize = windowDimensions.width > 480 ? "0.8em" : "1.3em"
 
-    var margin = {top: 20, right: 50, bottom: 30, left: 50},
+    var margin = {top: 20, right: 80, bottom: 30, left: 50},
     originalWidth = 600,
     originalHeight = windowDimensions.width > 480 ? 700 : 900,
     width = originalWidth - margin.left - margin.right,
@@ -65,7 +65,8 @@ const ChartDosesGivenByState = ({rawData, shotColMa}) => {
   const xDataMax = d3.max(data, (d => d[shotColMa]))
   const xScaleModule = 20000
   const xScaleMax = xDataMax + Math.abs((xDataMax % xScaleModule) - xScaleModule)
-  const ticksNumber = xScaleMax / xScaleModule
+  // const ticksNumber = xScaleMax / xScaleModule
+  const ticksNumber = 5
 
   x.domain([0, xScaleMax])
   y.domain(data.map(function(d) { return d.code; }));
