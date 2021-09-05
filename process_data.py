@@ -115,6 +115,7 @@ def run(SHOT_COL, COVERAGE_COL):
         # coverage = max_row['coverage_first_shot']
         # coverage = max_row['coverage_fully_vaccinated']
         coverage = max_row[COVERAGE_COL]
+        initial_coverage = coverage
         first_shot = max_row['total_first_shot']
         full_shot = max_row['fully_vaccinated']
         shots = max_row[SHOT_COL]
@@ -148,7 +149,7 @@ def run(SHOT_COL, COVERAGE_COL):
 
         COVERAGE_MILESTONES = [0.5, 0.7, 0.9, 1]
         milestone_rows = []
-        for milestone in COVERAGE_MILESTONES:
+        for milestone in [m for m in COVERAGE_MILESTONES if m > initial_coverage]:
             # row = df_projected.iloc[(df_projected['coverage_first_shot'] - milestone).abs().argsort()[:1]]
             row = df_projected.iloc[(df_projected['coverage_fully_vaccinated'] - milestone).abs().argsort()[:1]]
             row['milestone'] = milestone
