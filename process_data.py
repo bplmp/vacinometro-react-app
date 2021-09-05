@@ -16,7 +16,8 @@ def run(SHOT_COL, COVERAGE_COL):
     Path(EXPORT_FOLDER).mkdir(parents=True, exist_ok=True)
 
     MOVING_AVG = 7
-    BR_ADULT_POP = 160911631
+    # BR_ADULT_POP = 160911631
+    BR_ADULT_POP = 211755692
     BR_TOTAL_POP = 211755692
     BR_PCT_ADULT_POP = BR_ADULT_POP / BR_TOTAL_POP
     # https://ftp.ibge.gov.br/Estimativas_de_Populacao/Estimativas_2020/

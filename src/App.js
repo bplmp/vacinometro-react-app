@@ -74,28 +74,28 @@ function App() {
         <h1 className="tc f2-ns f3 lh-copy b mb3">Quanto tempo até a população brasileira ser vacinada contra a Covid-19?</h1>
 
         <h2 className="tc f2-ns f3 bb pb2 mt4">Primeira dose</h2>
-        <p className="tc f4-ns f5 lh-copy normal mt0">No ritmo atual, demoraria até <span className="b">{brMainMilestoneDateFirst}</span> para que <span className="b">{MAIN_MILESTONE * 100}%</span> da população adulta do Brasil recebesse <span className="b">pelo menos 1 dose</span> da vacina.</p>
+        <p className="tc f4-ns f5 lh-copy normal mt0">No ritmo atual, demoraria até <span className="b">{brMainMilestoneDateFirst}</span> para que <span className="b">{MAIN_MILESTONE * 100}%</span> da população do Brasil recebesse <span className="b">pelo menos 1 dose</span> da vacina.</p>
         <ChartPctVaccinated rawData={projections_first} stateCode="WRL" coverageCol="coverage_first_shot"/>
         {timesDosesUntilYearEndFirst &&
-          <p className="tc f3-ns f4 lh-copy normal mt4">Precisamos vacinar <span className="b">{timesDosesUntilYearEndFirst.toLocaleString("pt-BR", { maximumFractionDigits: 2 })} vezes mais rápido</span> para que 90% da população receba pelo menos uma dose <span className="b">até o fim do ano</span>.</p>
+          <p className="tc f4-ns f5 lh-copy normal mt4">Precisamos vacinar <span className="b">{timesDosesUntilYearEndFirst.toLocaleString("pt-BR", { maximumFractionDigits: 2 })} vezes mais rápido</span> para que 90% da população receba pelo menos uma dose <span className="b">até o fim do ano</span>.</p>
         }
 
         <h2 className="tc f2-ns f3 bb pb2 mt4">Imunização completa</h2>
-        <p className="tc f4-ns f5 lh-copy normal mt0">No ritmo atual, demoraria até <span className="b">{brMainMilestoneDateFull}</span> para que <span className="b">{MAIN_MILESTONE * 100}%</span> da população adulta do Brasil recebesse <span className="b">imunização completa</span> (duas doses ou dose única).</p>
+        <p className="tc f4-ns f5 lh-copy normal mt0">No ritmo atual, demoraria até <span className="b">{brMainMilestoneDateFull}</span> para que <span className="b">{MAIN_MILESTONE * 100}%</span> da população do Brasil recebesse <span className="b">imunização completa</span> (duas doses ou dose única).</p>
         <ChartPctVaccinated rawData={projections_full} stateCode="WRL" coverageCol="coverage_fully_vaccinated"/>
         {timesDosesUntilYearEndFull &&
-          <p className="tc f3-ns f4 lh-copy normal mt4">Precisamos vacinar <span className="b">{timesDosesUntilYearEndFull.toLocaleString("pt-BR", { maximumFractionDigits: 2 })} vezes mais rápido</span> para que 90% da população receba imunização completa <span className="b">até o fim do ano</span>.</p>
+          <p className="tc f4-ns f5 lh-copy normal mt4">Precisamos vacinar <span className="b">{timesDosesUntilYearEndFull.toLocaleString("pt-BR", { maximumFractionDigits: 2 })} vezes mais rápido</span> para que 90% da população receba imunização completa <span className="b">até o fim do ano</span>.</p>
         }
       </section>
       <section>
         <h2 className="tc f2-ns f3 lh-copy b">Quantas primeiras doses estão sendo aplicadas por dia no Brasil?</h2>
-        <p className="tc f3-ns f4 lh-copy normal mt0">O Brasil está aplicando <span className="b">{brLatest.new_first_shot_mov_avg.toLocaleString("pt-BR")} primeiras doses por dia</span>, considerando a média móvel dos últimos {MOVING_AVG} dias.</p>
+        <p className="tc f4-ns f5 lh-copy normal mt0">O Brasil está aplicando <span className="b">{brLatest.new_first_shot_mov_avg.toLocaleString("pt-BR")} primeiras doses por dia</span>, considerando a média móvel dos últimos {MOVING_AVG} dias.</p>
         <ChartDosesGiven rawData={projections_first} stateCode="WRL" shotColMa="new_first_shot_mov_avg" shotCol="new_first_shot"/>
         <figcaption className="f6 i mt2">A linha representa a média movel de {MOVING_AVG} dias.</figcaption>
       </section>
       <section>
         <h2 className="tc f2-ns f3 lh-copy b">Quantas segundas doses (ou doses únicas) estão sendo aplicadas por dia no Brasil?</h2>
-        <p className="tc f3-ns f4 lh-copy normal mt0">O Brasil está aplicando <span className="b">{brLatest.new_fully_vaccinated_mov_avg.toLocaleString("pt-BR")} segundas doses por dia</span>, considerando a média móvel dos últimos {MOVING_AVG} dias.</p>
+        <p className="tc f4-ns f5 lh-copy normal mt0">O Brasil está aplicando <span className="b">{brLatest.new_fully_vaccinated_mov_avg.toLocaleString("pt-BR")} segundas doses por dia</span>, considerando a média móvel dos últimos {MOVING_AVG} dias.</p>
         <ChartDosesGiven rawData={projections_full} stateCode="WRL" shotColMa="new_fully_vaccinated_mov_avg" shotCol="new_fully_vaccinated"/>
         <figcaption className="f6 i mt2">A linha representa a média movel de {MOVING_AVG} dias.</figcaption>
       </section>
@@ -110,7 +110,7 @@ function App() {
         {/*
         <h3 className="tc f4-ns f5 lh-copy normal mb0 mt4">Dias até 90% da população receber a primeira dose, por estado</h3>
         <ChartPctVaccinatedByState rawData={milestones}/>
-        <figcaption className="f6 i mt2">Projeção considera a média movel de {MOVING_AVG} dias de primeiras doses e população adulta por estado.</figcaption>
+        <figcaption className="f6 i mt2">Projeção considera a média movel de {MOVING_AVG} dias de primeiras doses e população por estado.</figcaption>
         */}
       </section>
         {/*
@@ -119,7 +119,7 @@ function App() {
         {
           STATES.map(state => (
           <section key={state.acronym}>
-            <h2 className="tc f3-ns f4 lh-copy b mt5">{state.name}</h2>
+            <h2 className="tc f4-ns f5 lh-copy b mt5">{state.name}</h2>
             <div className="">
               <div className="w-100">
                 <ChartPctVaccinated rawData={projections} stateCode={state.acronym}/>
@@ -136,8 +136,8 @@ function App() {
       <section className="mt4 bt">
         <h2 className="tc f2-ns f3 lh-copy b mb0">Dados e metodologia</h2>
         <p className="lh-copy">Os dados de vacinação são do <a href={DATA_SOURCE.url} target="_blank" rel="noreferrer">{DATA_SOURCE.text}</a>. Dados de população são estimativas do IBGE, 2020.</p>
-        <p className="lh-copy">Consideramos população adulta (elegível para receber a vacina) como os maiores de 18 anos.</p>
-        <p className="lh-copy">A projeção do tempo para vacinar a população adulta com pelo menos uma dose considera a média móvel de {MOVING_AVG} dias das novas primeiras doses aplicadas.</p>
+        <p className="lh-copy">Consideramos atualmente toda a população do Brasil. Anteriormente, considerávamos população adulta (elegível para receber a vacina) como os maiores de 18 anos.</p>
+        <p className="lh-copy">A projeção do tempo para vacinar a população com pelo menos uma dose considera a média móvel de {MOVING_AVG} dias das novas primeiras doses aplicadas.</p>
         <p className="lh-copy">Inspirado no painel de vacinação do <a href="https://www.nytimes.com/interactive/2020/us/covid-19-vaccine-doses.html">NY Times</a>.</p>
         <p className="lh-copy">Desenvolvido por <a href="https://twitter.com/bernardomaps">Bernardo Loureiro | Medida SP</a>.</p>
       </section>
