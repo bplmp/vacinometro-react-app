@@ -53,6 +53,8 @@ const ChartDosesGivenByState = ({rawData, shotColMa}) => {
         d.date = moment(d.date);
     });
 
+    // console.log(data);
+
   // set the ranges
   var y = d3.scaleBand()
             .range([height, 0])
@@ -63,8 +65,9 @@ const ChartDosesGivenByState = ({rawData, shotColMa}) => {
 
   // Scale the range of the data in the domains
   const xDataMax = d3.max(data, (d => d[shotColMa]))
-  const xScaleModule = 20000
-  const xScaleMax = xDataMax + Math.abs((xDataMax % xScaleModule) - xScaleModule)
+  // const xScaleModule = 20000
+  // const xScaleMax = xDataMax + Math.abs((xDataMax % xScaleModule) - xScaleModule)
+  const xScaleMax = xDataMax
   // const ticksNumber = xScaleMax / xScaleModule
   const ticksNumber = 5
 
@@ -87,10 +90,10 @@ const ChartDosesGivenByState = ({rawData, shotColMa}) => {
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x)
         .ticks(ticksNumber)
-        .tickFormat(function(d, i, n) {
-            // console.log(d)
-            return n[i + 1] ? (d / 1000) : (d / 1000 + " mil")
-          })
+        // .tickFormat(function(d, i, n) {
+        //     // console.log(d)
+        //     return n[i + 1] ? (d / 1000) : (d / 1000 + " mil")
+        //   })
               // .ticks(d3.timeYear)
               // .tickFormat(d3.timeFormat("%d/%m/%y"))
       )
@@ -117,7 +120,8 @@ const ChartDosesGivenByState = ({rawData, shotColMa}) => {
             .style("left", d3.event.pageX - 50 + "px")
             .style("top", d3.event.pageY - 70 + "px")
             .style("display", "inline-block")
-            .html(`${d.code}: ${(Math.round(d[shotColMa] * 10) / 10).toLocaleString("pt-BR")} mil<br/>primeiras doses em média por dia`);
+            // .html(`${d.code}: ${(Math.round(d[shotColMa] * 10) / 10).toLocaleString("pt-BR")} mil<br/>primeiras doses em média por dia`);
+            .html(`${d.code}: ${(Math.round(d[shotColMa] * 10) / 10).toLocaleString("pt-BR")} doses<br/> por dez mil hab. em média por dia`);
       })
       .on("mouseout", function(d){ tooltip.style("display", "none");});
 
@@ -135,9 +139,9 @@ const ChartDosesGivenByState = ({rawData, shotColMa}) => {
       .style("alignment-baseline", "middle")
       .text(function(d) {
         if (d[shotColMa] === maxShots) {
-          return (d[shotColMa] / 1000).toLocaleString("pt-BR", { maximumFractionDigits: 1 }) + " mil";
+          return (d[shotColMa]).toLocaleString("pt-BR", { maximumFractionDigits: 1 }) + " doses";
         } else {
-          return (d[shotColMa] / 1000).toLocaleString("pt-BR", { maximumFractionDigits: 1 });
+          return (d[shotColMa]).toLocaleString("pt-BR", { maximumFractionDigits: 1 });
         }
       })
 

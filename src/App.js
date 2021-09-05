@@ -10,7 +10,7 @@ import latest_full from "./components/data/coverage_fully_vaccinated/latest"
 
 import ChartPctVaccinated from "./components/ChartPctVaccinated"
 import ChartDosesGiven from "./components/ChartDosesGiven"
-// import ChartPctVaccinatedByState from "./components/ChartPctVaccinatedByState"
+import ChartPctVaccinatedByState from "./components/ChartPctVaccinatedByState"
 import ChartDosesGivenByState from "./components/ChartDosesGivenByState"
 import moment from "moment"
 
@@ -101,17 +101,21 @@ function App() {
       </section>
       <section className="mt4 bt">
         <h2 className="tc f2-ns f3 lh-copy b mb0">Como está o ritmo da vacinação em cada estado?</h2>
-        <h3 className="tc f4-ns f5 lh-copy normal mb0 mt4">Primeiras doses aplicadas em média por dia, por estado</h3>
-        <ChartDosesGivenByState rawData={latest_first} shotColMa="new_first_shot_mov_avg"/>
+        <h3 className="tc f4-ns f5 lh-copy normal mb0 mt4">Primeiras doses aplicadas em média por dia, por estado, <b>por dez mil habitantes</b></h3>
+        <ChartDosesGivenByState rawData={latest_first} shotColMa="new_first_shot_mov_avg_by_pop"/>
         <figcaption className="f6 i mt2">Dado representa a média movel de {MOVING_AVG} dias.</figcaption>
-        <h3 className="tc f4-ns f5 lh-copy normal mb0 mt4">Segundas doses aplicadas em média por dia, por estado</h3>
-        <ChartDosesGivenByState rawData={latest_full} shotColMa="new_fully_vaccinated_mov_avg"/>
+        <h3 className="tc f4-ns f5 lh-copy normal mb0 mt4">Segundas doses aplicadas em média por dia, por estado, <b>por dez mil habitantes</b></h3>
+        <ChartDosesGivenByState rawData={latest_full} shotColMa="new_fully_vaccinated_mov_avg_by_pop"/>
         <figcaption className="f6 i mt2">Dado representa a média movel de {MOVING_AVG} dias.</figcaption>
-        {/*
-        <h3 className="tc f4-ns f5 lh-copy normal mb0 mt4">Dias até 90% da população receber a primeira dose, por estado</h3>
-        <ChartPctVaccinatedByState rawData={milestones}/>
+      </section>
+      <section className="mt4 bt">
+        <h2 className="tc f2-ns f3 lh-copy b mb0">Qual o tempo estimado por estado?</h2>
+        <h3 className="tc f4-ns f5 lh-copy normal mb0 mt4"><b>Dias estimados</b> até 90% da população receber a primeira dose, por estado</h3>
+        <ChartPctVaccinatedByState rawData={milestones_first} id="first"/>
         <figcaption className="f6 i mt2">Projeção considera a média movel de {MOVING_AVG} dias de primeiras doses e população por estado.</figcaption>
-        */}
+        <h3 className="tc f4-ns f5 lh-copy normal mb0 mt4"><b>Dias estimados</b> até 90% da população receber imunização completa, por estado</h3>
+        <ChartPctVaccinatedByState rawData={milestones_full} id="full"/>
+        <figcaption className="f6 i mt2">Projeção considera a média movel de {MOVING_AVG} dias de segundas doses e população por estado.</figcaption>
       </section>
         {/*
         <section className="mt5 bt">

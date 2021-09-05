@@ -167,8 +167,10 @@ def run(SHOT_COL, COVERAGE_COL):
 
         ma_col = f'new_first_shot_mov_avg'
         df_final[ma_col] = df_final['new_first_shot'].rolling(window=MOVING_AVG).mean().round()
+        df_final[ma_col + "_by_pop"] = (df_final[ma_col] / pop).fillna(value=False) * 10000
         ma_col_full = f'new_fully_vaccinated_mov_avg'
         df_final[ma_col_full] = df_final['new_fully_vaccinated'].rolling(window=MOVING_AVG).mean().round()
+        df_final[ma_col_full + "_by_pop"] = (df_final[ma_col_full] / pop).fillna(value=False) * 10000
         if outliers is True:
             # ignore outliers
             df_final['new_first_shot_corrected'] = np.where(df_final['outlier'] == True, df_final['new_first_shot'].shift(-1), df_final['new_first_shot'])

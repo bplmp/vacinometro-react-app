@@ -12,9 +12,9 @@ function getWindowDimensions() {
   };
 }
 
-const ChartPctVaccinatedByState = ({rawData}) => {
+const ChartPctVaccinatedByState = ({rawData, id}) => {
   const data = cloneDeep(rawData.filter(row => (row.milestone === 0.9) && (row.code !== "WRL"))).sort((b,a) => a.days_until - b.days_until)
-  const chartId = `pct-vaccinated-by-state`
+  const chartId = `pct-vaccinated-by-state-${id}`
 
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
