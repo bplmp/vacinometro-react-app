@@ -71,6 +71,7 @@ function App() {
     <div className="grid">
       <section>
         <p className="f6 i mt4 tc">Dados atualizados em {moment(brLatest.date).format('DD/MM/YYYY')}</p>
+        <p className="f5 mt4 tc lh-copy bb bt pv3"><strong>Atenção!</strong> Esta página não está mais sendo atualizada. Recomendamos acompanhar o <a href="https://especiais.g1.globo.com/bemestar/vacina/2021/mapa-brasil-vacina-covid/">painel de vacinação do G1</a>.</p>
         <h1 className="tc f2-ns f3 lh-copy b mb3">Quanto tempo até a população brasileira ser vacinada contra a Covid-19?</h1>
 
         <h2 className="tc f2-ns f3 bb pb2 mt4">Primeira dose</h2>
